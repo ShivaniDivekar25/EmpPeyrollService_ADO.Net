@@ -25,22 +25,31 @@
                 EmployeeName = "Terisa",
                 BasicPay = 3000000
             };
-           
-            Console.WriteLine("Enter an option");
-            Console.WriteLine("1:Create new employee data\n2:Update Specific data");
-            int option = Convert.ToInt32(Console.ReadLine());
-            switch (option)
+            bool flag = true;
+            while (flag)
             {
-                case 1:
-                    employeePayroll.AddNewDataIntoDataBase(empPayrollModel);
-                    break;
-                case 2:
-                    employeePayroll.UpadteSpecificData(empUpdate);
-                    break;
-                default:
-                    Console.WriteLine("Please enter right option");
-                    break;
-            } 
+                Console.WriteLine("Enter an option");
+                Console.WriteLine("1:Create new employee data\n2:Update Specific data\n3:Get all data from database\n4:Exit");
+                int option = Convert.ToInt32(Console.ReadLine());
+                switch (option)
+                {
+                    case 1:
+                        employeePayroll.AddNewDataIntoDataBase(empPayrollModel);
+                        break;
+                    case 2:
+                        employeePayroll.UpadteSpecificData(empUpdate);
+                        break;
+                    case 3:
+                        employeePayroll.GetAllDataFromDB();
+                        break;
+                    case 4:
+                        flag = false;
+                        break;
+                    default:
+                        Console.WriteLine("Please enter right option");
+                        break;
+                }
+            }
         }
     }
 }

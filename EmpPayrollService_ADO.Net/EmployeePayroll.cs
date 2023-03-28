@@ -73,5 +73,52 @@ namespace EmpPayrollService_ADO.Net
                 Console.WriteLine(ex.Message);
             }
         }
+        public void GetAllDataFromDB()
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            try
+            {
+                List<EmpPayrollModel> empPayrollModelList = new List<EmpPayrollModel>();
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("SpGetAllDataFromDB", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader sqlReader = sqlCommand.ExecuteReader();
+                    if (sqlReader.HasRows)
+                    {
+                        while (sqlReader.Read())
+                        {
+                            EmpPayrollModel empPayroll = new EmpPayrollModel();
+                            empPayroll.EmployeeName = sqlReader.GetString(1);
+                            empPayroll.BasicPay = sqlReader.GetDouble(2);
+                            empPayroll.Startdate = sqlReader.GetDateTime(3);
+                            empPayroll.Gender = sqlReader.GetString(4)[0];
+                            empPayroll.AddressOfEmp = sqlReader.GetString(5);
+                            empPayroll.PhoneNumber = sqlReader.GetInt64(6);
+                            empPayroll.Department = sqlReader.GetString(7);
+                            empPayroll.Deduction = sqlReader.GetInt64(8);
+                            empPayroll.TaxablePay = sqlReader.GetInt64(9);
+                            empPayroll.IncomeTax = sqlReader.GetInt64(10);
+                            empPayroll.NetPay = sqlReader.GetInt64(11);
+
+                            empPayrollModelList.Add(empPayroll);
+                        }
+                        foreach (EmpPayrollModel employee in empPayrollModelList)
+                        {
+                            Console.WriteLine(employee.EmployeeName + " " + employee.BasicPay + " " + employee.Department);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found in Table");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }
