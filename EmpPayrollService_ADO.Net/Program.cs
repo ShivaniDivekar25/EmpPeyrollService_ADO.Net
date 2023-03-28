@@ -29,7 +29,7 @@
             while (flag)
             {
                 Console.WriteLine("Enter an option");
-                Console.WriteLine("1:Create new employee data\n2:Update Specific data\n3:Get all data from database\n4:Exit");
+                Console.WriteLine("1:Create new employee data\n2:Update Specific data\n3:Get all data from database\n4:Retrieve data for Startdate within range\n5:Exit");
                 int option = Convert.ToInt32(Console.ReadLine());
                 switch (option)
                 {
@@ -43,6 +43,9 @@
                         employeePayroll.GetAllDataFromDB();
                         break;
                     case 4:
+                        employeePayroll.RetriveDataForStartdateWithinRange();
+                        break;
+                    case 5:
                         flag = false;
                         break;
                     default:
