@@ -19,12 +19,12 @@ namespace EmpPayrollService_ADO.Net
                 using (sqlConnection)
                 {
                     sqlConnection.Open();
-                    SqlCommand sqlCommand = new SqlCommand("SpEmployee_Payroll_Table", sqlConnection);
+                    SqlCommand sqlCommand = new SqlCommand("SpEmployeePayroll_Table", sqlConnection);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
 
                     sqlCommand.Parameters.AddWithValue("@EmployeeName", empPayrollModel.EmployeeName);
                     sqlCommand.Parameters.AddWithValue("@BasicPay", empPayrollModel.BasicPay);
-                    sqlCommand.Parameters.AddWithValue("@Startdate", Convert.ToDateTime(empPayrollModel.Startdate)); 
+                    sqlCommand.Parameters.AddWithValue("@Startdate", empPayrollModel.Startdate); 
                     sqlCommand.Parameters.AddWithValue("@Gender", empPayrollModel.Gender);
                     sqlCommand.Parameters.AddWithValue("@AddressOfEmp", empPayrollModel.AddressOfEmp);
                     sqlCommand.Parameters.AddWithValue("@PhoneNumber", empPayrollModel.PhoneNumber);
@@ -41,6 +41,32 @@ namespace EmpPayrollService_ADO.Net
                     else
                         Console.WriteLine("Error while adding new data");
                 }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void UpadteSpecificData(EmpPayrollModel empPayrollModel)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("SpUpdateSalaryData", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@EmployeeName", empPayrollModel.EmployeeName);
+                    sqlCommand.Parameters.AddWithValue("@BasicPay", empPayrollModel.BasicPay);
+                    int result = sqlCommand.ExecuteNonQuery();
+
+                    if(result >= 1)
+                        Console.WriteLine("Data updated successfully");
+                    else
+                        Console.WriteLine("Data not found for updating");
+                }
+
             }
             catch(Exception ex)
             {
